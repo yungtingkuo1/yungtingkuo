@@ -32,15 +32,29 @@ def user_type():
         first_name = input("Provide first name:")
         last_name = input("Provide last name:")
         class_name = input("Provide class name:")
+
+        database["students"].append(
+            {"first_name": first_name, "last_name": last_name, "Class": class_name}
+        )
     elif user_type == "teacher":
         first_name = input("Provide first name:")
         last_name = input("Provide last name:")
         subject_name = input("Provide subject name:")
-        class_name = input("Provide class name:")
+        classes =[]
+        while True:
+            class_name = input("Provide class name:")
+            if not class_name:
+                break
+            classes.append(class_name)
+
     elif user_type == "homeroom teacher":
         first_name = input("Provide first name:")
         last_name = input("Provide last name:")
         class_name = input("Provide class name:")
+
+        database["homeroom teacher"].append(
+            {"first_name": first_name, "last_name": last_name, "Class": class_name}
+        )
     else:
         print("Invalid input!")
     
@@ -71,8 +85,8 @@ def manage():
         teacher_name = input("Provide a teacher name:")
         for teacher in database["teachers"]:
             if teacher ["last_name"] == teacher_name:
-                subject = teacher["subject"]
-                print(subject)
+                classes = teacher["Class"]
+                print(classes)
     # homeroom teacher list all students the homeroom teacher leads.
     if manage_type == "homeroom teacher":
         homeroomteacher_name = input("Provide a homeroom teacher name:")
