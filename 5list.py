@@ -8,9 +8,9 @@ print("warehouse")
 print("review")
 print("end - end program. \n") 
 
-account = []
-inventory = []
-list = []
+account = 0
+inventory = {}
+history = []
 
 
 while True:
@@ -18,50 +18,54 @@ while True:
 
     if command =="balance":
             amount = float(input("Enter the amount to add (+) or subtract (-): "))
-            if amount >= 0:
-                account.append(amount)
+            if amount + account >= 0:
+                account += amount
             else:
-                if abs(amount) <= account.balance:
-                    account.append(amount)
+                print("Error! account can not be negative!")
+                continue
         #an amount to add or subtract from the account.
     elif command =="sale":
         product_name = input("Enter the product name: ")
         price = float(input("Enter the product price: "))
-        quantity = int(input("Enter the product quantity: "))
-        list.append(product_name,price, quantity)      
-        print("Your current sale are:", end=" ")
-        for product_name,price, quantity in list:
-            print(product_name,price, quantity + ",", end="")  
-        #update the account and warehouse accordingly. update ammount[], inventory[] 
+        quantity = float(input("Enter the product quantity: "))
+        if inventory.get(product_name, 0) < quantity:
+                print(f"Not enought itmes: {product_name}")
+                continue
+        
+        history.append([product_name,price, quantity]) 
+
+        inventory[product_name] -= quantity
+        account += quantity * price
+
+        #update the account and warehouse accordingly. 
     elif command =="purchase":
         product_name = input("Enter the product name: ")
         price = float(input("Enter the product price: "))
-        quantity = int(input("Enter the product quantity: "))
-        if product is None:
-                product = (product_name, price, quantity)
-                inventory.add_product(product)
-        print("Your current purchase are:", end=" ")
-        for product_name,price, quantity in inventory:
-            print(product_name,price, quantity + ",", end="")
+        quantity = float(input("Enter the product quantity: "))
+        
+        history.append([product_name,price, quantity]) 
+
+        inventory[product_name] -= quantity
+        account += quantity * price
         # update the account and warehouse accordingly. the account balance is not negative after purchase
     elif command =="account":
-            print(f"Account balance: {account.balance}")
+            print(f"Account balance: {account}")
     elif command == "list":
-        for event in list:
+        for event in history:
             print(event)   
         #total inventory in the warehouse along with product prices and quantities. 
     elif command == "warehouse":  
         product_name = input("Enter the product name: ")  
-        product = inventory.get_product(product_name)
+        product_quantity = inventory.get(product_name)
         for item, quantity in inventory:
-            print(f"Product: {product.name}, Price: {product.price}, Quantity: {product.quantity}")
+            print(f"Product: {product_name}, Quantity: {product_quantity}")
          # Prompt for a product name and display its status in the warehouse.
     elif command == "review":
         review = []
         print("Provide from and to values")
         from_value = int(input("From:"))
         to_value = int(input("To:"))
-        new_review = review[from_value:to_value]
+        new_review = history[from_value:to_value]
         print(new_review)
         #Prompt for two indices 'from' and 'to', and display all recorded operations within that range.
         #If ‘from’ and ‘to’ are empty, display all recorder operations. 
