@@ -28,25 +28,27 @@ while True:
         product_name = input("Enter the product name: ")
         price = float(input("Enter the product price: "))
         quantity = float(input("Enter the product quantity: "))
-        if inventory.get(product_name, 0) < quantity:
-                print(f"Not enought itmes: {product_name}")
-                continue
-        
-        history.append([product_name,price, quantity]) 
 
-        inventory[product_name] -= quantity
-        account += quantity * price
-
+        if product_name in inventory and inventory[product_name]>=quantity:
+            price = inventory[product_name]
+            history.append([product_name,price, quantity]) 
+            inventory[product_name] -= quantity
+            account += quantity * price
+        else:
+            print("Item not availalbe in inventory or insufficenit quantity.")
+            continue
         #update the account and warehouse accordingly. 
     elif command =="purchase":
         product_name = input("Enter the product name: ")
         price = float(input("Enter the product price: "))
         quantity = float(input("Enter the product quantity: "))
         
-        history.append([product_name,price, quantity]) 
-
-        inventory[product_name] -= quantity
-        account += quantity * price
+        if account >= quantity * price:
+            history.append([product_name,price, quantity]) 
+            inventory[product_name] -= quantity
+            account += quantity * price
+        else:
+            print(f"Insufficient funds. Purchase cannot be completed.")
         # update the account and warehouse accordingly. the account balance is not negative after purchase
     elif command =="account":
             print(f"Account balance: {account}")
