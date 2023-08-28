@@ -1,6 +1,10 @@
 import sys
 print(sys.argv)
 
+new_name = sys.argv[0]
+if not os.path.exists("customers.csv"):
+    print("Input file 'customers.csv' does not exist. Listing files in the directory:")
+
 import os
 new_name = input("Type in the new name for the .csv file:")
 os.rename ("customers.csv", new_name)
@@ -24,4 +28,4 @@ for idx, row in enumerate(full_data):
 with open("customers_edit.csv", "w" , newline="") as f:
     writer = csv.writer(f)
     for row in full_data:
-        writer.wrtierow(row)
+        writer.writerow(row)
