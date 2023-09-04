@@ -20,11 +20,6 @@ print("warehouse")
 print("review")
 print("end - end program. \n") 
 
-account = 0
-inventory = {}
-history = []
-
-
 while True:
     command = input("please enster a command:")
 
@@ -55,10 +50,12 @@ while True:
         price = float(input("Enter the product price: "))
         quantity = float(input("Enter the product quantity: "))
         
-        history.append([product_name,price, quantity]) 
-
-        inventory[product_name] -= quantity
-        account += quantity * price
+        if account >= quantity * price:
+            history.append([product_name,price, quantity]) 
+            inventory[product_name] -= quantity
+            account += quantity * price
+        else:
+            print(f"Insufficient funds. Purchase cannot be completed.")
         # update the account and warehouse accordingly. the account balance is not negative after purchase
     elif command =="account":
             print(f"Account balance: {account}")
@@ -86,6 +83,7 @@ while True:
         _9import1.save_file(file_name, inventory)
         _9import1.save_file(file_name_account, account)
         _9import1.save_file(file_name_history, history)
+        break
     else: 
         print("Availalbe commands: \n")
         print("balance")
