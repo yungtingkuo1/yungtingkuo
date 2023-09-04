@@ -40,12 +40,19 @@ def user_type():
         first_name = input("Provide first name:")
         last_name = input("Provide last name:")
         subject_name = input("Provide subject name:")
+        _classes = []
         while True:
             class_name = input("Provide class name:")
             if not class_name:
                 break
-            database["teachers"].append(
-            {"first_name": first_name, "last_name": last_name, "Class": class_name}
+            _classes.append(class_name)
+        database["teachers"].append(
+            {
+                "first_name": first_name, 
+                "last_name": last_name,
+                "Class": _classes, 
+                "subject":subject_name,
+            }
         )
 
     elif user_type == "homeroom teacher":
