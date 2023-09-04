@@ -4,6 +4,9 @@ print(sys.argv)
 new_name = sys.argv[0]
 if not os.path.exists("customers.csv"):
     print("Input file 'customers.csv' does not exist. Listing files in the directory:")
+    files = os.listdir()
+    for file in files:
+        print(file)
 
 import os
 new_name = input("Type in the new name for the .csv file:")
