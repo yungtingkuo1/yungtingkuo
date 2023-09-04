@@ -29,7 +29,7 @@ while True:
         price = float(input("Enter the product price: "))
         quantity = float(input("Enter the product quantity: "))
 
-        if product_name in inventory and inventory[product_name]>=quantity:
+        if product_name in inventory and inventory[product_name] >= quantity:
             price = inventory[product_name]
             history.append([product_name,price, quantity]) 
             inventory[product_name] -= quantity
