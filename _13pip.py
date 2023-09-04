@@ -10,23 +10,22 @@ import datetime
 import os
 import pickle
 
-expected_date_format = "YYYY-MM-DD"
+# expected_date_format = "YYYY-MM-DD"
 
 API_URL = "https://api.open-meteo.com/v1/forecast"
-Data_folder_path = "weather_data_folder"
+data_folder_path = "weather_data_folder"
 
 # check if data folder exists, if not create it
-if not os.path.exists(Data_folder_path):
-    os.makedirs(Data_folder_path)
+if not os.path.exists(data_folder_path):
+    os.makedirs(data_folder_path)
 
 params = {
-    "daily":"precipitation_sum",
-    "end_date":"%7Bsearched_date%7D%60",
-    "latitude":"%7Blatitude%7D",
-    "longitude":"%7Blongitude%7D",
-    "start_date":"%7Bsearched_date%7D",
-    "timezone":"Europe%2FLondon",
-    "date":"2023-08-26",
+    # "end_date":"%7Bsearched_date%7D%60",
+     # "start_date":"%7Bsearched_date%7D",
+    "daily":"precipitation_sum",  
+    "latitude":"51.50853",
+    "longitude":"-0.12574",  
+    "timezone":"Europe/London",
 }
 
 #Getting date from the user
@@ -51,16 +50,8 @@ year_part, month_part, day_part = requested_date.split('-')
 
 print(f"Date passed correctly: {requested_date}. Getting the data...")
 
-for daily in params["result"]:
-    if daily ["precipitation_sum"] > 0:
-        print("It will rain")
-    elif daily ["precipitation_sum"] == 0:
-        print("It will not rain")
-    else:
-        print("I don't know")
-
 # check if the date was alreday downloaded if yes, return value from file
-file_path = os.path.join(Data_folder_path, f"{requested_date}.pickle")
+file_path = os.path.join(data_folder_path, f"{requested_date}.pickle")
 
 if os.path.exists(file_path):
     print("Date present in history, getting from cache...")
@@ -70,7 +61,8 @@ if os.path.exists(file_path):
 else:
     print("Date not present in history, getting from API...")
     # get the data from API, save to file
-    params["date"] = requested_date
+    params["start_date"] = requested_date
+    params["end_date"] = requested_date
 
     #Getting requst
     resp = requests.get(API_URL, params=params)
@@ -80,9 +72,14 @@ else:
         with open(file_path, "wb") as f:
             pickle.dump(data,f)
     else:
-        date = {}
+        data = {}
         print(f"Request was not successful: {resp.text}")
 
-# here data should be dictionary
+precip = print(data.get("daily",{}).get("precipitation_sum",[-1])[0])
 
-print(data)
+if precip > 0:
+    print("It will rain")
+elif precip == 0:
+    print("It will not rain")
+else:
+    print("I don't know")
