@@ -1,34 +1,37 @@
 import sys
-print(sys.argv)
+import os
+import csv
 
-new_name = sys.argv[0]
-if not os.path.exists("customers.csv"):
-    print("Input file 'customers.csv' does not exist. Listing files in the directory:")
+#       0         1      2       3         4       5      6
+#python reader.py in.csv out.csv 0,0,piano 3,1,mug 1,2,17 3,3,0
+
+old_name = sys.argv[1]
+if not os.path.exists(old_name):
+    print(f"Input file '{old_name}' does not exist. Listing files in the directory:")
     files = os.listdir()
     for file in files:
         print(file)
 
-import os
-new_name = input("Type in the new name for the .csv file:")
-os.rename ("customers.csv", new_name)
+new_name = sys.argv[2]
 
-with open("customers.csv", "r") as f:
-    for line in f:
-        print(line.strip().split(","))
-
-import csv
 
 full_data =[]
 
-with open("customers.csv", "r") as f:
+with open(old_name, "r") as f:
     reader = csv.reader(f)
     for line in reader:
         full_data.append(line)
 
-for idx, row in enumerate(full_data):
-    print(row)
 
-with open("customers_edit.csv", "w" , newline="") as f:
+for value in sys.argv[3:]:
+
+    y,x,v = value.split(",")
+    y = int(y)
+    x = int(x)
+    full_data[x][y]= v
+
+
+with open(new_name, "w" , newline="") as f:
     writer = csv.writer(f)
     for row in full_data:
         writer.writerow(row)
