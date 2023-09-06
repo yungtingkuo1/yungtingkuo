@@ -75,7 +75,7 @@ else:
         data = {}
         print(f"Request was not successful: {resp.text}")
 
-precip = print(data.get("daily",{}).get("precipitation_sum",[-1])[0])
+precip = data.get("daily",{}).get("precipitation_sum",[-1])[0]
 
 if precip > 0:
     print("It will rain")
