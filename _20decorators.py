@@ -12,11 +12,38 @@ class Manager:
         return self.function[name](self,*args, *kwargs)
             
 manager = Manager ()
-
+sale = Sale()
 
 @manager.assign("accounting")
 def accounting():
     print("Welcome to our accounting system!")
+
+@sale.assgin("sale")
+class Sale:
+    def sale():
+        product_name = input("Enter the product name: ")
+        price = float(input("Enter the product price: "))
+        quantity = float(input("Enter the product quantity: "))
+
+        manager.execute(product_name, price, quantity)
+        print(f"Sale: {product_name, price, quantity}")
+
+@purchase.assgin("purchase")
+def purchase(func):
+    def wrapper(*args, **kwargs):
+        # Add purchase functionality here
+        # ...
+        return func(*args, **kwargs)
+    return wrapper
+
+@balance.assgin("balance")
+def balance(func):
+    def wrapper(*args, **kwargs):
+        # Add balance functionality here
+        # ...
+        return func(*args, **kwargs)
+    return wrapper
+
 
 while True:
     action = input("What action to do [sale, purchase or balance]")
