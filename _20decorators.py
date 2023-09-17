@@ -88,6 +88,8 @@ while True:
         manager.execute("purchase")
     elif action == "balance":
         manager.execute("balance")
+    elif action == "review":
+        manager.execute("review")
     else:
         print("Exiting...")
         manager.save_data()
