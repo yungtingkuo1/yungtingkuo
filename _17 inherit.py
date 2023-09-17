@@ -82,42 +82,30 @@ if not os.path.exists(old_name):
 new_name = sys.argv[2]
 
 
-full_data =[]
-
 if old_name.endswith(".csv"):
-    with open(old_name, "r") as f:
-        reader = csv.reader(f)
-        for line in reader:
-            full_data.append(line)
-
+    input_file_handler = CSVFileReader(old_name)
 elif old_name.endswith(".json"):
-    with open(old_name, "r") as f:
-        reader = json.load(f)
-        
+    input_file_handler = JSONFileReader(old_name)      
 elif old_name.endswith(".pickle"):
-    with open(old_name, "rb") as f:
-        reader = pickle.load(f)
-
-
-for value in sys.argv[3:]:
-
-    y,x,v = value.split(",")
-    y = int(y)
-    x = int(x)
-    full_data[x][y]= v
-
+    input_file_handler = PickleFileReader(old_name)
+else:
+    raise Exception("File not supported.")
 
 if new_name.endswith(".csv"):
-    with open(new_name, "w" , newline="") as f:
-        writer = csv.writer(f)
-        for row in full_data:
-            writer.writerow(row)
-
+    output_file_handler = CSVFileWriter(new_name)
 elif new_name.endswith(".json"):
-    with open(new_name, "w" , newline="") as f:
-        writer = json.dump(f)
-
+    output_file_handler = JSONFileWriter(new_name)
 elif new_name.endswith(".pickle"):
-    with open(new_name, "wb" , newline="") as f:
-        writer = pickle.dump(f)
+    output_file_handler = PickleFileWriter(new_name)
+else:
+    raise Exception("File not supported.")
+
+
+modifier = DataModifier(input_file_handler, output_file_handler)
+modifier.modify_data(sys.argv[3:])
+
+
+
+
+
         
