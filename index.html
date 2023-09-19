@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title> Main page</title>
+        <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+        <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
+        <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+    </head>
+    <body>
+                <div class="column col-10 bg-gray p-centered">
+                    <table border="1">
+                        <thead>
+                            <tr>
+                                <td>Product name</td>
+                                <td>Product quantity</td>
+                                <td>Account balance</td>
+                                <td>Transaction history</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for produt in products %}
+                            <tr>
+                                <td>{{product.name}}</td>
+                                <td>{{product.quantiy}}</td>                         
+                                <td>{{product.balance}}</td>
+                                <td>{{product.history}}</td>
+                            {% endfor %}
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br>
+                </div>
+
+    </body>
+</html>
