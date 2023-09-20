@@ -14,12 +14,12 @@
                 </div>
                 <div class="column col-10 bg-gray p-centered">
                     <div class="column col-10 col-mr-auto bg-secondary ">
-                    <a href="_1html.html"><button class="btn btn-lg">Main page</button></a>
-                    <a href="purchaseform.html"><button class="btn btn-lg">Purchase form</button></a>
-                    <a href="saleform.html"><button class="btn btn-lg">Sale form</button></a>
-                    <a href="balancechangeform.html"><button class="btn btn-lg">Balance change form</button></a>
-                    <a href="history.html"><button class="btn btn-lg">History</button></a>
-                </div>        
+                    <a href="{{ url_for('main_page') }}"><button class="btn btn-lg">Main page</button></a>
+                    <a href="{{ url_for('purchase') }}"><button class="btn btn-lg">Purchase form</button></a>
+                    <a href="{{ url_for('sale') }}"><button class="btn btn-lg">Sale form</button></a>
+                    <a href="{{ url_for('balance') }}"><button class="btn btn-lg">Balance change form</button></a>
+                    <a href="{{ url_for('history') }}"><button class="btn btn-lg">History</button></a>
+                </div>       
             </div>
             <div class="columns">
                 <div class="column col-10 col-mr-auto bg-gray p-centered mt-2">
@@ -29,42 +29,11 @@
                 </div>
             </div>
             <div class="column col-10 bg-gray p-centered">
-                <p>sold 2000 of Chair</p>
-                <p>sold 1000 of Desk</p>
-                <p>sold 4000 of Lamp</p>
-                <p>Account balance: add 9000</p>
-                <p>purchase 4000 of Chair</p>
-                <p>purchase 5000 of Desk</p>
-                <p>purchase 8000 of Lamp</p>
+                {% for entry in history %}
+                <p>{{ entry }}</p>
+                {% endfor %}
             </div>
-            <div class="columns">
-                <div class="column col-10 bg-gray p-centered">
-                    <table border="1">
-                        <thead>
-                            <tr>
-                                <td>Product name</td>
-                                <td>Current stock level</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Chair</td>
-                                <td>10000</td>
-                            </tr>
-                            <tr>
-                                <td>Desk</td>
-                                <td>8000</td>
-                            </tr>
-                            <tr>
-                                <td>Lamp</td>
-                                <td>79000</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <br>
-                </div>
-            </div>
-
+            
             <div class="columns">
                 <div class="column col-10 bg-secondary p-centered">
                     <h6>Powered by our great company.</h6>
